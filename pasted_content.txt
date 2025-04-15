@@ -1,0 +1,113 @@
+ PLANNING.MD: Strategic Steel Purchasing Dashboard
+
+## 1. Introduction & Goal
+
+**Project:** Develop a web-based Strategic Purchasing Dashboard focused on steel plates (thickness > 15mm) and related welded components.
+
+**Primary Goal:** Empower the strategic purchasing team with actionable insights derived from integrated internal data and external market intelligence to make well-informed decisions, mitigate risks, optimize costs, and manage the supplier base effectively.
+
+**Development Environment:** Cursor or Replit.
+**Data Backend:** Supabase.
+
+## 2. High-Level Vision
+
+The dashboard will serve as a central hub for steel commodity strategy. It will provide:
+
+* **Visibility:** Clear overview of spend, supplier landscape, and part characteristics.
+* **Intelligence:** Real-time market data (indices, pricing), geopolitical risk assessment.
+* **Analysis:** Tools for spend analysis, supplier evaluation, and cost simulation.
+* **Collaboration:** A common platform for data input (via Supabase) and strategic discussions.
+
+## 3. Key Features & Modules
+
+The dashboard will be modular, allowing for phased development and future expansion.
+
+1.  **Market Intelligence Module:**
+    * **Real-time Index Tracking:** Fetch and display data from relevant steel indices (e.g.,MetalpriceAPI Github repo,  MEPS Steel Index for European Carbon Steel Plate, potentially others like LME Steel HRC Futures for broader trends, regional indices if available). Visualize historical trends.
+    * **Pricing Information:** Track historical purchase prices (from internal data) against market indices. Potentially integrate external benchmark pricing data sources (if accessible).
+    * **Geopolitical & Supply Chain Risk Assessment:** Integrate data feeds or APIs highlighting risks in key steel producing/supplying regions (e.g., political instability, trade policy changes, natural disasters, logistical bottlenecks). Visualize risks on a map or dashboard.
+
+2.  **Supplier Management Module:**
+    * **Supplier Database:** Central repository of current and potential suppliers (uploaded/managed via Supabase). Include contact info, locations, capabilities, certifications, performance metrics (quality, delivery).
+    * **Supplier Mapping:** Visualize supplier locations geographically, potentially overlaid with risk data.
+    * **Regional Supplier Recommendations:** Algorithm or filtering mechanism to suggest potential suppliers based on part requirements, geographic proximity, capabilities, and potentially risk scores.
+
+3.  **Spend Analysis Module:**
+    * **Spend Overview:** Dashboard showing total spend, spend by supplier, by region, by part category, by steel grade/thickness. Visualize trends over time.
+    * **Pareto Analysis (ABC Analysis):** Identify top suppliers/parts by spend.
+    * **Price Variance Analysis:** Compare purchase prices against historical data or market benchmarks.
+
+4.  **Component/Part Analysis Module:**
+    * **Part Database:** Link spend and supplier data to specific part numbers (managed via Supabase).
+    * **Thickness & Material Analysis:** Analyze spend and supplier concentration based on steel plate thickness ranges and potentially material grades (e.g., S235, S355).
+
+5.  **Cost Simulation & Estimation Module:**
+    * **"What-If" Scenarios:** Simulate the impact of steel index fluctuations on component costs.
+    * **Cost Reduction Estimation:** Model potential savings from supplier consolidation, negotiation based on market data, or shifting volumes between suppliers/regions.
+
+6.  **Data Management Interface:**
+    * User-friendly interface (potentially integrated within the dashboard or as a separate admin panel) to interact with the Supabase database for uploading/editing:
+        * Spend data extracts (e.g., from ERP).
+        * Part number details (including thickness, grade).
+        * Supplier information (current and potential).
+
+## 4. Technical Scope
+
+* **Frontend:** Modern JavaScript framework (e.g., React, Vue, Svelte) for interactive UI. Visualization library (e.g., Chart.js, D3.js, Plotly). Mapping library (e.g., Leaflet, Mapbox GL JS).
+* **Backend:** Node.js or Python (Flask/Django) suitable for API integrations and data processing. Could potentially leverage Supabase Edge Functions for simpler tasks.
+* **Database:** Supabase (PostgreSQL). Define or use already existing clear schemas for:
+    * `suppliers` - existing
+    * `parts` (with fields for `part_number`, `description`, `thickness_mm`, `material_grade`, etc.) - existing
+    * `spend_data` (linking parts, suppliers, date, quantity, price)- existing
+    * `market_indices` (storing historical index data)
+    * `risk_data` (storing regional risk scores/alerts)
+    * `potential_suppliers`
+* **Data Sources & APIs:**
+    * **Internal:** Manual uploads/CSV imports initially
+    * **External:**
+        * MetalpriceAPI, https://github.com/metalpriceapi/metalpriceapi-nodejs-typescript
+        * Other potential index providers (LME, regional sources).
+        * Geopolitical Risk Data Providers (e.g., APIs from news sources, specialized risk intelligence services - investigate feasibility and cost).
+        * Currency Exchange Rate APIs.
+* **Development Environment:** Cursor IDE 
+* **Version Control:** Git (e.g., GitHub, GitLab).
+* **Deployment:** Supabase Hosting, Vercel, Netlify, Replit Hosting, or other cloud platform.
+
+## 5. Important Milestones (Phased Approach)
+
+* **Phase 1: Foundation & Core Data Display **
+    * Setup project repository, Supabase instance, and basic CI/CD.
+    * Use allready existing core Supabase database schemas (`suppliers`, `parts`, `spend_data`).
+    * Develop basic data upload mechanism (CSV/manual) to Supabase.
+    * Build initial dashboard UI shell.
+    * Display static/uploaded data: Supplier list, Part list, Basic Spend Summary Table.
+* **Phase 2: Market Intelligence Integration 
+    * Secure access to Index data :https://github.com/metalpriceapi/metalpriceapi-nodejs-typescript.
+    * Develop backend service/function to fetch and store index data in Supabase (`market_indices` table).
+    * Implement frontend module to display index charts (historical trends).
+    * Research and integrate basic geopolitical risk indicators (e.g., news feed aggregation by region or simple scoring).
+* **Phase 3: Supplier Analysis & Mapping **
+    * Implement supplier mapping visualization on the dashboard.
+    * Develop filtering/logic for basic regional supplier recommendations based on stored supplier data.
+    * Refine supplier database interface in Supabase.
+* **Phase 4: Spend & Component Analysis **
+    * Develop interactive spend analysis charts/tables (spend breakdown, trends).
+    * Implement filtering/analysis based on part thickness and material grade.
+    * Build basic Price Variance calculation against historical internal data.
+* **Phase 5: Cost Simulation & Refinement **
+    * Develop initial cost simulation module (impact of index changes).
+    * UI/UX improvements based on initial feedback.
+    * Documentation & Training materials.
+    * Prepare for initial deployment/user testing.
+
+## 6. Success Metrics
+
+* Accuracy and timeliness of integrated data (market and internal).
+* Time saved in manual data gathering and analysis for strategic reviews.
+* Identification of concrete cost reduction or risk mitigation opportunities attributed to dashboard insights.
+
+## 7. Risks & Challenges
+
+* **Data Availability & Cost:** Access to real-time, reliable market indices (MetalPriceAPI) and risk data may require significant subscription costs or have API limitations.
+* **Data Quality:** Ensuring the accuracy and consistency of internal data uploads (spend, parts) is crucial. Data cleansing might be needed.
+* **Simulation Accuracy:** Cost simulation models require careful design and validation.
